@@ -5,18 +5,24 @@ import type { Difficulty } from './GameModeSelector';
 const CHOICES = ['schere', 'stein', 'papier', 'brunnen'] as const;
 type Choice = typeof CHOICES[number];
 
-export default function Game({ difficulty, onReset }: { difficulty: Difficulty; onReset: () => void }) {
+export default function Game({
+  difficulty,
+  onReset,
+}: {
+  difficulty: Difficulty;
+  onReset: () => void;
+}) {
   const [playerWins, setPlayerWins] = useState(0);
   const [computerWins, setComputerWins] = useState(0);
-  const [lastPlayerChoice, setLastPlayerChoice] = useState<Choice | null>(null);
-  const [lastComputerChoice, setLastComputerChoice] = useState<Choice | null>(null);
   const [resultText, setResultText] = useState('');
 
   const getComputerChoice = (playerChoice: Choice): Choice => {
     if (difficulty === 'leicht') {
       return CHOICES[Math.floor(Math.random() * CHOICES.length)];
     } else if (difficulty === 'mittel') {
-      return Math.random() < 0.5 ? playerChoice : CHOICES[Math.floor(Math.random() * CHOICES.length)];
+      return Math.random() < 0.5
+        ? playerChoice
+        : CHOICES[Math.floor(Math.random() * CHOICES.length)];
     } else {
       const beats: Record<Choice, Choice[]> = {
         schere: ['papier'],
@@ -47,11 +53,11 @@ export default function Game({ difficulty, onReset }: { difficulty: Difficulty; 
   const handleClick = (choice: Choice) => {
     const compChoice = getComputerChoice(choice);
     const result = determineResult(choice, compChoice);
-    setLastPlayerChoice(choice);
-    setLastComputerChoice(compChoice);
-    if (result === 'Gewonnen') setPlayerWins(p => p + 1);
-    else if (result === 'Verloren') setComputerWins(c => c + 1);
-    setResultText(`Du hast ${choice} gewählt. Computer wählte ${compChoice}. → Du hast ${result}.`);
+    if (result === 'Gewonnen') setPlayerWins((p) => p + 1);
+    else if (result === 'Verloren') setComputerWins((c) => c + 1);
+    setResultText(
+      `Du hast ${choice} gewählt. Computer wählte ${compChoice}. → Du hast ${result}.`
+    );
   };
 
   const isGameOver = playerWins === 3 || computerWins === 3;
@@ -59,10 +65,12 @@ export default function Game({ difficulty, onReset }: { difficulty: Difficulty; 
 
   return (
     <div className="space-y-4">
-      <p className="text-lg">Schwierigkeit: <strong>{difficulty}</strong></p>
+      <p className="text-lg">
+        Schwierigkeit: <strong>{difficulty}</strong>
+      </p>
       {!isGameOver && (
-        <div className="flex justify-center gap-4">
-          {CHOICES.map(choice => (
+        <div className="flex justify-center gap-4 flex-wrap">
+          {CHOICES.map((choice) => (
             <button key={choice} onClick={() => handleClick(choice)}>
               <img src={`/${choice}.png`} alt={choice} className="w-20 h-20" />
               <p className="capitalize">{choice}</p>
@@ -71,8 +79,6 @@ export default function Game({ difficulty, onReset }: { difficulty: Difficulty; 
         </div>
       )}
       <ResultDisplay
-        playerChoice={lastPlayerChoice}
-        computerChoice={lastComputerChoice}
         resultText={resultText}
         playerWins={playerWins}
         computerWins={computerWins}
@@ -80,7 +86,9 @@ export default function Game({ difficulty, onReset }: { difficulty: Difficulty; 
       {isGameOver && (
         <div className="space-y-2">
           <p className="text-xl font-bold">{finalText}</p>
-          <button className="btn" onClick={onReset}>Nochmal spielen</button>
+          <button className="btn" onClick={onReset}>
+            Nochmal spielen
+          </button>
         </div>
       )}
     </div>
