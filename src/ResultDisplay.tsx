@@ -1,14 +1,10 @@
 interface Props {
-  playerChoice: string | null;
-  computerChoice: string | null;
   resultText: string;
   playerWins: number;
   computerWins: number;
 }
 
 export default function ResultDisplay({
-  playerChoice,
-  computerChoice,
   resultText,
   playerWins,
   computerWins,
