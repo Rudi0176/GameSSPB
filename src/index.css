@@ -1,11 +1,8 @@
-body {
-  background-color: pink;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Entferne manuelles pink: */
 body {
   @apply bg-gray-100 text-gray-900;
 }
