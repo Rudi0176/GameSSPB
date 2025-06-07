@@ -64,29 +64,35 @@ export default function Game({
   const finalText = playerWins === 3 ? '✅ Du hast gewonnen!' : '❌ Du hast verloren!';
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col items-center justify-center space-y-6">
       <p className="text-lg">
         Schwierigkeit: <strong>{difficulty}</strong>
       </p>
+
       {!isGameOver && (
         <div className="flex justify-center gap-4 flex-wrap">
           {CHOICES.map((choice) => (
-            <button key={choice} onClick={() => handleClick(choice)}>
-              <img src={`/${choice}.png`} alt={choice} className="w-20 h-20" />
-              <p className="capitalize">{choice}</p>
+            <button key={choice} onClick={() => handleClick(choice)} className="text-center">
+              <img src={`/${choice}.png`} alt={choice} className="w-24 h-24 mx-auto" />
+              <p className="capitalize mt-2">{choice}</p>
             </button>
           ))}
         </div>
       )}
+
       <ResultDisplay
         resultText={resultText}
         playerWins={playerWins}
         computerWins={computerWins}
       />
+
       {isGameOver && (
-        <div className="space-y-2">
+        <div className="text-center space-y-3">
           <p className="text-xl font-bold">{finalText}</p>
-          <button className="btn" onClick={onReset}>
+          <button
+            onClick={onReset}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
             Nochmal spielen
           </button>
         </div>
