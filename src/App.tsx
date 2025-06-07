@@ -7,10 +7,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center p-4 bg-white rounded shadow">
-        <h1 className="text-3xl font-bold mb-6">
-          Schere, Stein, Papier, Brunnen
-        </h1>
+      <div className="bg-white rounded-xl shadow-md p-8 w-full max-w-md text-center">
+        <h1 className="text-3xl font-bold mb-6">Schere, Stein, Papier, Brunnen</h1>
         {difficulty ? (
           <Game difficulty={difficulty} onReset={() => setDifficulty(null)} />
         ) : (
